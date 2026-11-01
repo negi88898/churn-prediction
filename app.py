@@ -1,8 +1,6 @@
 """
 ChurnSense AI - Customer Churn Prediction web app (Streamlit).
 Run locally:  streamlit run app.py
-
-Team: Aditini Tiwari & Ankit Singh Negi  |  DIT University  |  Artificial Intelligence project
 """
 import os
 import subprocess
@@ -62,110 +60,128 @@ df = load_data()
 metrics = load_metrics()
 
 # ----------------------------------------------------------------------------
-# Styling
+# Styling (teal + blue on near-black, with one light section)
 # ----------------------------------------------------------------------------
 html("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 html, body, [class*="css"], .stApp {font-family:'Inter',sans-serif;}
-.stApp{background:radial-gradient(900px 480px at 88% -6%, rgba(214,32,110,.30), transparent 60%),radial-gradient(800px 500px at 0% 8%, rgba(110,40,200,.18), transparent 60%),#07060b;color:#e9e6f2;}
+.stApp{background:radial-gradient(900px 500px at 90% -8%, rgba(20,184,166,.26), transparent 60%),radial-gradient(800px 520px at -5% 12%, rgba(59,130,246,.16), transparent 60%),#05080b;color:#e6ecee;}
 header[data-testid="stHeader"]{background:transparent;}
 #MainMenu, footer, [data-testid="stToolbar"]{visibility:hidden;}
-.block-container{max-width:1200px;padding-top:1rem;padding-bottom:3rem;}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4px 18px;border-bottom:1px solid #1d1a29;margin-bottom:34px;flex-wrap:wrap;gap:12px}
-.brand{display:flex;align-items:center;gap:10px;font-size:27px;font-weight:700;color:#fff;letter-spacing:-.6px}
-.logo{width:34px;height:34px;background:linear-gradient(135deg,#ff3d8b,#b3125a);clip-path:polygon(0 0,100% 0,62% 100%,36% 56%,0 40%)}
-.links a{color:#d8d4e6 !important;text-decoration:none !important;margin:0 14px;font-weight:500;font-size:15px}
-.links a:hover{color:#ff4fa3 !important}
-.pill{display:inline-block;border:1.5px solid #fff;color:#fff;border-radius:999px;padding:9px 20px;font-weight:600;font-size:14px;margin-left:8px}
-.pill.fill{background:#e0286f;border-color:#e0286f}
-.eyebrow{color:#9a95ad;letter-spacing:.14em;font-size:13px;font-weight:600;text-transform:uppercase;margin:34px 0 18px}
-.h1{font-size:66px;line-height:1.03;font-weight:700;letter-spacing:-2.2px;color:#fff;margin:0 0 24px}
-.grad{background:linear-gradient(90deg,#c2185b,#ff4fa3 55%,#ff9bd0);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{color:#9a95ad;font-size:20px;line-height:1.55;max-width:560px;margin-bottom:26px}
-.credit{display:inline-flex;gap:10px;align-items:center;background:#120f1b;border:1px solid #262134;border-radius:14px;padding:12px 16px;color:#cfcadd;font-size:14px}
-.credit b{color:#fff}
-.preview{border:1px solid #2a2538;border-radius:30px;padding:14px;background:linear-gradient(160deg,#4a0c2c,#1b0c30 60%,#0b0912)}
-.pv-in{background:#0f0d17;border-radius:20px;padding:24px}
-.pv-top{display:flex;justify-content:space-between;color:#9a95ad;font-size:13px;margin-bottom:16px}
+.block-container{max-width:1200px;padding-top:0;padding-bottom:3rem;}
+[data-testid="stImage"] img{border-radius:18px;}
+.banner{display:flex;justify-content:center;align-items:center;gap:12px;background:linear-gradient(90deg,#0f766e,#0e7490 50%,#1d4ed8);color:#fff;padding:12px 18px;font-size:15px;font-weight:500;margin:0 -2rem;text-align:center;flex-wrap:wrap}
+.banner .new{background:rgba(255,255,255,.22);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;letter-spacing:.04em}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 4px 20px;border-bottom:1px solid #162126;margin-bottom:26px;flex-wrap:wrap;gap:12px}
+.brand{display:flex;align-items:center;gap:11px;font-size:28px;font-weight:600;color:#fff;letter-spacing:-.8px}
+.logo{width:32px;height:32px;border-radius:50%;background:conic-gradient(#2dd4bf 0 72%,#2563eb 0);box-shadow:inset 0 0 0 8px #05080b}
+.links a{color:#d3dde0 !important;text-decoration:none !important;margin:0 15px;font-weight:500;font-size:15px}
+.links a:hover{color:#2dd4bf !important}
+.pill{display:inline-block;border:1.5px solid #fff;color:#fff !important;text-decoration:none !important;border-radius:999px;padding:10px 22px;font-weight:600;font-size:14px;margin-left:10px}
+.pill.fill{background:#14b8a6;border-color:#14b8a6;color:#03110f !important}
+.eyebrow{color:#8a9a9e;letter-spacing:.14em;font-size:13px;font-weight:600;text-transform:uppercase;margin:34px 0 18px}
+.eyebrow:before{content:"";display:inline-block;width:18px;height:2px;background:#2dd4bf;vertical-align:middle;margin-right:12px}
+.h1{font-size:68px;line-height:1.03;font-weight:600;letter-spacing:-2.4px;color:#fff;margin:0 0 24px}
+.grad{background:linear-gradient(90deg,#14b8a6,#22d3ee 55%,#60a5fa);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:#8a9a9e;font-size:20px;line-height:1.55;max-width:560px;margin-bottom:10px;font-weight:300}
+.preview{border:1px solid #1f2d33;border-radius:32px;padding:14px;background:linear-gradient(160deg,#0f766e,#1e3a8a 58%,#070b10)}
+.pv-in{background:#0a1014;border-radius:22px;padding:24px}
+.pv-top{display:flex;justify-content:space-between;color:#8a9a9e;font-size:13px;margin-bottom:16px}
 .pv-row{display:flex;align-items:center;gap:22px}
-.bar{height:8px;border-radius:99px;background:#241f33;margin:7px 0 14px;overflow:hidden}
-.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#c2185b,#ff6fb0)}
-.lbl{color:#cfcadd;font-size:13px;display:flex;justify-content:space-between}
-.ring{width:150px;height:150px;border-radius:50%;background:conic-gradient(var(--c) calc(var(--p)*1%), #231f33 0);display:grid;place-items:center;flex-shrink:0}
-.ring-in{width:118px;height:118px;border-radius:50%;background:#0f0d17;display:grid;place-content:center;text-align:center}
+.bar{height:8px;border-radius:99px;background:#18242a;margin:7px 0 14px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#14b8a6,#60a5fa)}
+.lbl{color:#cfdadd;font-size:13px;display:flex;justify-content:space-between}
+.ring{width:150px;height:150px;border-radius:50%;background:conic-gradient(var(--c) calc(var(--p)*1%), #18242a 0);display:grid;place-items:center;flex-shrink:0}
+.ring-in{width:118px;height:118px;border-radius:50%;background:#0a1014;display:grid;place-content:center;text-align:center}
 .ring-in span{font-size:30px;font-weight:700;color:#fff;line-height:1}
-.ring-in small{color:#9a95ad;font-size:12px;margin-top:4px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px}
-.kpi{background:#0f0d17;border:1px solid #221e30;border-radius:18px;padding:20px 22px}
-.kpi span{color:#9a95ad;font-size:13px;font-weight:500}
-.kpi b{display:block;font-size:34px;color:#fff;margin-top:6px;letter-spacing:-1px}
-.kpi small{color:#ff6fb0;font-size:12px}
-.sec{font-size:40px;font-weight:700;color:#fff;letter-spacing:-1.2px;margin:70px 0 6px}
-.sec-sub{color:#9a95ad;font-size:17px;margin-bottom:24px}
-label p, .stSelectbox label p, .stSlider label p, .stNumberInput label p{color:#cfcadd !important;font-weight:500}
-div[data-baseweb="select"]>div, div[data-baseweb="input"]>div{background:#13101c !important;border-color:#2a2538 !important;border-radius:12px !important}
-.stButton>button{background:#e0286f;color:#fff;border:none;border-radius:999px;padding:.7rem 2.2rem;font-weight:600;font-size:16px}
-.stButton>button:hover{background:#ff3d8b;color:#fff}
-.res{display:flex;gap:30px;align-items:center;background:#0f0d17;border:1px solid #221e30;border-radius:22px;padding:28px;margin-top:18px;flex-wrap:wrap}
+.ring-in small{color:#8a9a9e;font-size:12px;margin-top:4px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:46px}
+.kpi{background:#0a1014;border:1px solid #162126;border-radius:18px;padding:20px 22px}
+.kpi span{color:#8a9a9e;font-size:13px;font-weight:500}
+.kpi b{display:block;font-size:34px;color:#fff;margin-top:6px;letter-spacing:-1px;font-weight:600}
+.kpi small{color:#2dd4bf;font-size:12px}
+.feat{display:grid;grid-template-columns:1fr 1.7fr;gap:70px;margin-top:100px}
+.h2{font-size:44px;line-height:1.12;font-weight:400;color:#fff;letter-spacing:-1.2px;margin:0 0 20px}
+.feat p.lead{color:#8a9a9e;font-size:18px;line-height:1.65;font-weight:300}
+.fi{display:flex;gap:34px;padding:34px 0;border-bottom:1px solid #162126}
+.fi:first-child{padding-top:0}
+.num{font-size:58px;font-weight:200;color:#0f766e;min-width:92px;line-height:1}
+.fi h4{color:#fff;font-weight:400;font-size:28px;margin:0 0 10px;letter-spacing:-.5px}
+.fi p{color:#8a9a9e;font-size:17px;line-height:1.6;margin:0;font-weight:300}
+.quote{font-size:42px;font-weight:300;line-height:1.28;color:#fff;max-width:980px;margin:110px 0 18px;letter-spacing:-1px}
+.qcap{font-weight:600;color:#2dd4bf;font-size:15px;letter-spacing:.08em;text-transform:uppercase}
+.sec{font-size:42px;font-weight:500;color:#fff;letter-spacing:-1.3px;margin:100px 0 6px}
+.sec-sub{color:#8a9a9e;font-size:17px;margin-bottom:24px;font-weight:300}
+label p, .stSelectbox label p, .stSlider label p, .stNumberInput label p{color:#cbd7da !important;font-weight:500}
+div[data-baseweb="select"]>div, div[data-baseweb="input"]>div{background:#0c1317 !important;border-color:#1f2d33 !important;border-radius:12px !important}
+.stButton>button{background:#14b8a6;color:#03110f;border:none;border-radius:999px;padding:.75rem 2.4rem;font-weight:700;font-size:16px}
+.stButton>button:hover{background:#2dd4bf;color:#03110f}
+.res{display:flex;gap:30px;align-items:center;background:#0a1014;border:1px solid #162126;border-radius:24px;padding:28px;margin-top:18px;flex-wrap:wrap}
 .tag{display:inline-block;padding:5px 14px;border-radius:999px;font-size:13px;font-weight:600;margin-bottom:10px}
-.res h3{color:#fff;margin:4px 0 8px;font-size:26px}
-.res p{color:#a9a4bb;margin:0 0 12px}
+.res h3{color:#fff;margin:4px 0 8px;font-size:26px;font-weight:500}
+.res p{color:#9fb0b4;margin:0 0 12px}
 .chip{display:inline-block;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:500;margin:0 8px 8px 0}
-.chip.bad{background:rgba(255,77,109,.14);color:#ff7a93}
-.chip.good{background:rgba(52,211,153,.14);color:#4ade9f}
-.tbl{width:100%;border-collapse:collapse;background:#0f0d17;border:1px solid #221e30;border-radius:16px;overflow:hidden}
-.tbl th{color:#9a95ad;font-weight:500;font-size:13px;text-align:left;padding:14px 16px;border-bottom:1px solid #221e30}
-.tbl td{color:#e9e6f2;padding:14px 16px;border-bottom:1px solid #1a1727;font-size:15px}
-.tbl tr.best td{background:rgba(224,40,111,.10);color:#fff;font-weight:600}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.step{background:#0f0d17;border:1px solid #221e30;border-radius:18px;padding:24px}
-.step i{font-style:normal;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ff3d8b,#b3125a);color:#fff;font-weight:700;margin-bottom:14px}
-.step h4{color:#fff;margin:0 0 8px;font-size:18px}
-.step p{color:#9a95ad;margin:0;font-size:14.5px;line-height:1.55}
-.team{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:760px}
-.member{background:linear-gradient(160deg,#1c0d27,#0f0d17);border:1px solid #2a2538;border-radius:22px;padding:28px;display:flex;gap:18px;align-items:center}
-.av{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,#ff3d8b,#7c2bd9);display:grid;place-items:center;color:#fff;font-size:24px;font-weight:700;flex-shrink:0}
-.member h4{color:#fff;margin:0 0 4px;font-size:20px}
-.member p{color:#9a95ad;margin:0;font-size:14px}
-.college{margin-top:22px;color:#cfcadd;font-size:16px}
-.college b{color:#ff6fb0}
-.foot{margin-top:70px;padding-top:22px;border-top:1px solid #1d1a29;color:#756f88;font-size:14px;text-align:center}
-.foot b{color:#cfcadd}
-@media (max-width:900px){.h1{font-size:42px}.kpis,.steps{grid-template-columns:repeat(2,1fr)}.team{grid-template-columns:1fr}.links{display:none}}
+.chip.bad{background:rgba(255,93,115,.14);color:#ff8497}
+.chip.good{background:rgba(45,212,191,.14);color:#4fe3cf}
+.tbl{width:100%;border-collapse:collapse;background:#0a1014;border:1px solid #162126;border-radius:16px;overflow:hidden}
+.tbl th{color:#8a9a9e;font-weight:500;font-size:13px;text-align:left;padding:14px 16px;border-bottom:1px solid #162126}
+.tbl td{color:#e6ecee;padding:14px 16px;border-bottom:1px solid #111b20;font-size:15px}
+.tbl tr.best td{background:rgba(20,184,166,.12);color:#fff;font-weight:600}
+.light{background:#f1f6f5;border-radius:34px;padding:60px 56px;margin-top:110px}
+.light .eyebrow{color:#5e7370;margin-top:0}
+.lgrid{display:grid;grid-template-columns:1fr 1.5fr;gap:56px;align-items:start}
+.light .h2{color:#0a1412;font-weight:400}
+.light .acc{color:#0d9488}
+.light p.lead{color:#5b6b68;font-size:17px;line-height:1.7;font-weight:400}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{background:#fff;border:1px solid #dfeae8;border-radius:22px;padding:24px;box-shadow:0 8px 24px rgba(15,60,55,.06)}
+.card i{font-style:normal;display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:rgba(20,184,166,.12);border:1px solid #8fe0d5;color:#0f766e;font-weight:700;margin-bottom:16px;font-size:14px}
+.card h4{color:#0a1412;margin:0 0 8px;font-size:21px;font-weight:500;letter-spacing:-.4px}
+.card p{color:#5b6b68;margin:0;font-size:15px;line-height:1.6}
+.flow{background:linear-gradient(135deg,#0d9488,#2563eb);border-radius:22px;padding:26px;display:flex;align-items:center;justify-content:space-around;gap:10px;flex-wrap:wrap;margin-top:16px}
+.fb{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);color:#fff;border-radius:14px;padding:14px 20px;font-weight:600;font-size:14px;text-align:center}
+.arr{color:#fff;font-size:24px}
+.foot{margin-top:90px;padding-top:24px;border-top:1px solid #162126;color:#6b7c80;font-size:14px;text-align:center}
+.foot b{color:#cbd7da}
+@media (max-width:900px){.h1{font-size:42px}.h2{font-size:32px}.quote{font-size:28px}.kpis{grid-template-columns:repeat(2,1fr)}.feat,.lgrid{grid-template-columns:1fr;gap:30px}.cards{grid-template-columns:1fr}.links{display:none}.light{padding:34px 22px}.num{font-size:40px;min-width:64px}}
 </style>
 """)
 
 # ----------------------------------------------------------------------------
-# Navbar + hero
+# Announcement banner (the only place the project authors are named) + navbar
 # ----------------------------------------------------------------------------
 html("""
+<div class="banner"><span class="new">NEW</span><span>AI customer churn prediction project by Aditini Tiwari &amp; Ankit Singh Negi</span></div>
 <div class="nav">
   <div class="brand"><div class="logo"></div>churnsense</div>
   <div class="links">
+    <a href="#why" target="_self">Product</a>
     <a href="#predict" target="_self">Predict</a>
     <a href="#insights" target="_self">Insights</a>
     <a href="#how" target="_self">How it works</a>
-    <a href="#team" target="_self">Team</a>
   </div>
-  <div><span class="pill">DIT University</span><span class="pill fill">AI Project</span></div>
+  <div><a class="pill" href="#predict" target="_self">Try the demo</a><a class="pill fill" href="#insights" target="_self">See insights</a></div>
 </div>
 """)
 
+# ----------------------------------------------------------------------------
+# Hero
+# ----------------------------------------------------------------------------
 left, right = st.columns([1.1, 1], gap="large")
 with left:
     html("""
-    <div class="eyebrow">— CHURNSENSE AI</div>
-    <div class="h1"><span class="grad">AI churn predictions,</span> before it's too late.</div>
-    <div class="sub">Turn customer data into churn risk scores your team can act on. Enter a customer's details and get an instant probability, the factors behind it and what to do next.</div>
-    <div class="credit">Built by <b>Aditini Tiwari</b> &amp; <b>Ankit Singh Negi</b> · DIT University</div>
+    <div class="eyebrow">CHURNSENSE PREDICT</div>
+    <div class="h1"><span class="grad">Spot churn early.</span> Act before customers leave.</div>
+    <div class="sub">Turn everyday customer data into a clear risk score, the reasons behind it and the next best step, in seconds.</div>
     """)
 with right:
     html("""
+    <div style="height:26px"></div>
     <div class="preview"><div class="pv-in">
       <div class="pv-top"><span>Sample output · Customer C-48213</span><span>Live model</span></div>
       <div class="pv-row">
-        <div class="ring" style="--p:82;--c:#ff4fa3"><div class="ring-in"><span>82%</span><small>churn risk</small></div></div>
+        <div class="ring" style="--p:82;--c:#22d3ee"><div class="ring-in"><span>82%</span><small>churn risk</small></div></div>
         <div style="flex:1">
           <div class="lbl"><span>Month-to-month contract</span><span>High</span></div><div class="bar"><i style="width:90%"></i></div>
           <div class="lbl"><span>Short tenure (2 months)</span><span>High</span></div><div class="bar"><i style="width:80%"></i></div>
@@ -191,6 +207,26 @@ html(f"""
   <div class="kpi"><span>Best model</span><b style="font-size:24px;padding-top:9px">{best_name}</b><small>accuracy {best_acc}</small></div>
   <div class="kpi"><span>ROC-AUC score</span><b>{best_auc}</b><small>higher is better (max 1.0)</small></div>
 </div>
+""")
+
+# ----------------------------------------------------------------------------
+# Numbered feature list + big statement
+# ----------------------------------------------------------------------------
+html("""
+<div id="why" class="feat">
+  <div>
+    <div class="eyebrow">WHY CHURNSENSE</div>
+    <div class="h2">Your early-warning system for customer churn</div>
+    <p class="lead">ChurnSense learns from past customers who stayed and who left, then flags the ones who look likely to leave next, so teams can step in while there is still time.</p>
+  </div>
+  <div>
+    <div class="fi"><div class="num">01</div><div><h4>Catch risk early</h4><p>Every customer gets a churn probability from 0 to 100%, so the riskiest accounts rise to the top of the list.</p></div></div>
+    <div class="fi"><div class="num">02</div><div><h4>Explain the 'why'</h4><p>Each score comes with plain-language risk factors such as contract type, tenure and billing, not just a number.</p></div></div>
+    <div class="fi"><div class="num">03</div><div><h4>Suggest the next step</h4><p>High, medium and low risk each trigger a different recommended action, from a retention call to a loyalty offer.</p></div></div>
+  </div>
+</div>
+<div class="quote">Keeping an existing customer is usually far cheaper than winning a new one.</div>
+<div class="qcap">The business case for churn prediction</div>
 """)
 
 # ----------------------------------------------------------------------------
@@ -235,11 +271,11 @@ if st.button("Predict churn risk"):
     pct = round(p * 100)
 
     if p >= 0.5:
-        level, color, tag_bg, msg = "High risk", "#ff4d6d", "rgba(255,77,109,.16)", "This customer is likely to leave. Act now."
+        level, color, tag_bg, msg = "High risk", "#ff5d73", "rgba(255,93,115,.16)", "This customer is likely to leave. Act now."
     elif p >= 0.3:
         level, color, tag_bg, msg = "Medium risk", "#ffb020", "rgba(255,176,32,.16)", "This customer shows warning signs. Keep an eye on them."
     else:
-        level, color, tag_bg, msg = "Low risk", "#34d399", "rgba(52,211,153,.16)", "This customer is likely to stay."
+        level, color, tag_bg, msg = "Low risk", "#2dd4bf", "rgba(45,212,191,.16)", "This customer is likely to stay."
 
     bad, good = [], []
     if contract == "Month-to-month":
@@ -296,7 +332,7 @@ def churn_chart(frame, col, title, sort_x=None):
     g[col] = g[col].astype(str)
     chart = (
         alt.Chart(g)
-        .mark_bar(cornerRadiusTopLeft=7, cornerRadiusTopRight=7, color="#ff4fa3")
+        .mark_bar(cornerRadiusTopLeft=7, cornerRadiusTopRight=7, color="#2dd4bf")
         .encode(
             x=alt.X(f"{col}:N", sort=sort_x or "-y", title=None, axis=alt.Axis(labelAngle=0, labelLimit=140)),
             y=alt.Y("Churned:Q", title="Churn rate", axis=alt.Axis(format="%")),
@@ -304,8 +340,8 @@ def churn_chart(frame, col, title, sort_x=None):
         )
         .properties(height=280, title=title)
         .configure(background="transparent")
-        .configure_axis(labelColor="#b9b4c9", titleColor="#b9b4c9", gridColor="#241f33", domainColor="#241f33")
-        .configure_title(color="#ffffff", anchor="start", fontSize=16, fontWeight=600)
+        .configure_axis(labelColor="#a9b8bc", titleColor="#a9b8bc", gridColor="#17232a", domainColor="#17232a")
+        .configure_title(color="#ffffff", anchor="start", fontSize=16, fontWeight=500)
         .configure_view(strokeWidth=0)
     )
     return chart
@@ -332,38 +368,35 @@ if metrics is not None and len(metrics):
         rows += (f"<tr{cls}><td>{name}</td><td>{r['accuracy']:.1%}</td><td>{r['precision']:.2f}</td>"
                  f"<td>{r['recall']:.2f}</td><td>{r['f1']:.2f}</td><td>{r['roc_auc']:.3f}</td></tr>")
     html(f"""
-    <div style="color:#fff;font-size:20px;font-weight:600;margin:34px 0 14px">Model comparison</div>
+    <div style="color:#fff;font-size:20px;font-weight:500;margin:34px 0 14px">Model comparison</div>
     <table class="tbl"><tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>ROC-AUC</th></tr>{rows}</table>
     """)
 
 if os.path.exists("outputs/feature_importance.png"):
-    html('<div style="color:#fff;font-size:20px;font-weight:600;margin:34px 0 14px">Top churn drivers (from the best model)</div>')
+    html('<div style="color:#fff;font-size:20px;font-weight:500;margin:34px 0 14px">Top churn drivers (from the best model)</div>')
     st.image("outputs/feature_importance.png")
 
 # ----------------------------------------------------------------------------
-# How it works
+# How it works (light section)
 # ----------------------------------------------------------------------------
 html("""
-<div id="how"></div><div class="sec">How it works</div>
-<div class="sec-sub">From raw customer records to a risk score in four steps.</div>
-<div class="steps">
-  <div class="step"><i>1</i><h4>Collect data</h4><p>7,043 telecom customers with 21 columns: tenure, contract, services, billing and whether they left.</p></div>
-  <div class="step"><i>2</i><h4>Clean &amp; prepare</h4><p>Fix missing values, scale numbers and one-hot encode text columns so models can read them.</p></div>
-  <div class="step"><i>3</i><h4>Train models</h4><p>Logistic Regression, Random Forest and Gradient Boosting learn from 80% of the data and are tested on 20%.</p></div>
-  <div class="step"><i>4</i><h4>Predict &amp; act</h4><p>The best model scores each customer. High-risk customers get retention offers before they leave.</p></div>
+<div id="how" class="light">
+  <div class="lgrid">
+    <div>
+      <div class="eyebrow">HOW IT WORKS</div>
+      <div class="h2">AI churn prediction that tells you <span class="acc">who to call first.</span></div>
+      <p class="lead">From raw customer records to a risk score in four steps, built on a public telecom dataset of 7,043 customers.</p>
+    </div>
+    <div>
+      <div class="cards">
+        <div class="card"><i>01</i><h4>Collect data</h4><p>21 columns per customer: tenure, contract, services, billing and whether they left.</p></div>
+        <div class="card"><i>02</i><h4>Clean &amp; prepare</h4><p>Fix missing values, scale numbers and one-hot encode text so models can read them.</p></div>
+        <div class="card"><i>03</i><h4>Train models</h4><p>Logistic Regression, Random Forest and Gradient Boosting learn from 80% of the data and are tested on 20%.</p></div>
+        <div class="card"><i>04</i><h4>Predict &amp; act</h4><p>The best model scores each customer so retention offers go to those most likely to leave.</p></div>
+      </div>
+      <div class="flow"><div class="fb">Customer data</div><div class="arr">→</div><div class="fb">Trained ML model</div><div class="arr">→</div><div class="fb">Risk score + reasons</div></div>
+    </div>
+  </div>
 </div>
-""")
-
-# ----------------------------------------------------------------------------
-# Team + footer
-# ----------------------------------------------------------------------------
-html("""
-<div id="team"></div><div class="sec">Meet the team</div>
-<div class="sec-sub">Artificial Intelligence project: Customer Churn Prediction.</div>
-<div class="team">
-  <div class="member"><div class="av">AT</div><div><h4>Aditini Tiwari</h4><p>Project team member<br>DIT University</p></div></div>
-  <div class="member"><div class="av">AN</div><div><h4>Ankit Singh Negi</h4><p>Project team member<br>DIT University</p></div></div>
-</div>
-<div class="college">College: <b>DIT University</b></div>
-<div class="foot">© 2026 <b>ChurnSense AI</b> · Built by Aditini Tiwari &amp; Ankit Singh Negi · DIT University · Dataset: Telco Customer Churn (Kaggle)</div>
+<div class="foot"><b>ChurnSense AI</b> · Customer churn prediction with machine learning · Dataset: Telco Customer Churn (Kaggle)</div>
 """)
